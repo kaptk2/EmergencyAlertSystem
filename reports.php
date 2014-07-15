@@ -73,7 +73,9 @@ require "config.php";
           <h3 class="panel-title">Events</h3>
         </div>
         <div class="panel-body">
-          View last: <input id="events" type="text" size="3" value="10" disabled> events.
+          <p>View last: <input id="events" type="text" size="3" value="10" disabled> events.
+          <span class="pull-right"><a href="<?php echo $config['log_file']; ?>">Download log as spreadsheet</a></span>
+          </p>
         </div>
         <!-- Table -->
         <table class="table table-striped table-condensed">
@@ -88,8 +90,8 @@ require "config.php";
           </thead>
           <tbody>
             <?php
-              $log = tail_log(10, "./log/log.csv");
-              //print_r(array_filter($log)); die();
+              $log = tail_log(10, $config['log_file']);
+
               foreach ($log as $entry) {
                 if(isset($entry[4])) {
                   $info = $entry[4];
@@ -113,7 +115,5 @@ require "config.php";
     <!-- jQuery and Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <!-- Custom JavaScript
-    <script src="/assets/js/custom.js"></script>-->
   </body>
 </html>

@@ -48,14 +48,14 @@
           );
         } catch (Services_Twilio_RestException $e) {
           $error_msg = $e->getMessage();
-          $msg = array(time(), 'Failed', $data[0], $data[1], $error_msg);
-          log_status($msg, $log_file);
+          $log_error = array(time(), 'Failed', $data[0], $data[1], $error_msg);
+          log_status($log_error, $log_file);
           $error = True;
         }
 
         if ($error == False) {
-          $msg = array(time(), 'Success', $data[0], $data[1]);
-          log_status($msg, $log_file);
+          $log_success = array(time(), 'Success', $data[0], $data[1]);
+          log_status($log_success, $log_file);
         }
         $i++;
       }
@@ -65,6 +65,8 @@
 
   if ($_POST) {
     $message = check_input($_POST["message"]);
+    $message = html_entity_decode($message); // convert html enties back to chars
+
     $lists = $_POST["recipients"];
 
     if (strlen($message) > 140) { // Message to long, die
